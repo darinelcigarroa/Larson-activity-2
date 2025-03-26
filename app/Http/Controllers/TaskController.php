@@ -45,7 +45,24 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $task = new Task;
+            $task->fill($request->all());
+            $task->save();
+            
+            return response()->json([
+                'success' => true,
+                'tasks' => $task,
+                'message' => 'Tarea creada correctamente',
+            ]);
+
+        } catch(Exception $e) {
+            Log::error($e);
+            return response()->json([
+                'success' => false,
+                'message' => "Error interno al crear la tarea",
+            ]);
+        }
     }
 
     /**
