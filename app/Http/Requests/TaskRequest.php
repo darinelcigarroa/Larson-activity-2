@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class TaskRequest extends FormRequest
@@ -11,7 +12,7 @@ class TaskRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +23,21 @@ class TaskRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => 'required|max:10',
+            'status' => 'required',
+        ];
+    }
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'title.required' => 'El título es requerido', 
+            'title.max' => 'El título debe tener como máximo 10 caracteres', 
+            'status.required' => 'El estatus es requerido',
         ];
     }
 }
